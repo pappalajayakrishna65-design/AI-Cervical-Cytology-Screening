@@ -22,7 +22,7 @@ uploaded_file = st.file_uploader("Upload a Cervical Cell Image (JPG/PNG/BMP)", t
 if uploaded_file is not None:
     # Display the original image
     image = Image.open(uploaded_file)
-    
+    image.thumbnail((800, 800))
     col1, col2 = st.columns(2)
     with col1:
         st.image(image, caption="Original Uploaded Image", use_container_width=True)
@@ -30,7 +30,7 @@ if uploaded_file is not None:
     if st.button("Run AI Analysis"):
         with st.spinner('Analyzing cell structure...'):
             # 4. Run the YOLO Segmentation
-            results = model.predict(image)
+            results = model.predict(image, imgsz=640)
             result = results[0]
 
             with col2:
